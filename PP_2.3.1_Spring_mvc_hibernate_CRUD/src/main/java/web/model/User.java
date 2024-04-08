@@ -1,101 +1,94 @@
 package web.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
+
 
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    private long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "first_name")
+    @NotEmpty(message = "Поле имя не может быть пустым." )
+    @Pattern(regexp = "^[a-zA-Zа-яА-Я]*$", message = "Имя должно содержать только буквы.")
+    private String firstName;
 
-    @Column(name = "lastname")
-    private String lastname;
+    @Column(name = "last_name")
+    @NotEmpty(message = "Поле фамилия не может быть пустой")
+    @Pattern(regexp = "^[a-zA-Zа-яА-Я]*$", message = "Фамилия должна содержать только буквы.")
+    private String lastName;
 
-    @Column(name = "age")
-    private int age;
+    @Column(name = "phone_namber")
+    private String phoneNamber;
 
-
-    @JoinColumn(name = "language_id")
-    @ManyToMany
-    private Language languages;
-
-
-    @JoinColumn(name = "car_id")
-    private Car car;
+    @Column(name = "email", unique = true)
+    @Email(message = "Не корректный ввод Email ")
+    private String email;
 
     public User() {
     }
 
-    public User(String name, String lastname, int age, Language languages, Car car) {
-        this.name = name;
-        this.lastname = lastname;
-        this.age = age;
-        this.languages = languages;
-        this.car = car;
+    public User(String firstName, String lastName, String phoneNamber, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNamber = phoneNamber;
+        this.email = email;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public int getAge() {
-        return age;
+    public String getPhoneNamber() {
+        return phoneNamber;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setPhoneNamber(String phoneNamber) {
+        this.phoneNamber = phoneNamber;
     }
 
-    public Language getLanguages() {
-        return languages;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLanguages(Language languages) {
-        this.languages = languages;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", age=" + age +
-                ", languages=" + languages +
-                ", car=" + car +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNamber='" + phoneNamber + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
+
+
